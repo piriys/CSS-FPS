@@ -1,0 +1,315 @@
+body {
+  margin: 0;
+}
+#renderArea {
+  margin: 0;
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  width: 100vw;
+  perspective: 500px;
+  perspective-origin: center;
+  overflow: hidden;
+}
+#ground {
+  background: linear-gradient(#e7dfa1 0%, #a2b05b 5%, #606e0f 100%);
+  bottom: 0;
+  width: 100vw;
+  height: 50vh;
+  position: fixed;
+  z-index: -5;
+}
+#sky {
+  background: linear-gradient(
+    0deg,
+    #fe9c7f 0%,
+    #ffc1a0 5%,
+    #f09f9c 12%,
+    #c86b98 20%,
+    #632b6c 49%,
+    #261036 100%
+  );
+  top: 0;
+  width: 100vw;
+  height: 50vh;
+  position: fixed;
+  z-index: -4;
+}
+#hudLayer {
+  position: fixed;
+  z-index: 10000;
+}
+#skyboxLayer {
+  transform-style: preserve-3d;
+  transform-origin: 50vmax 50vmax 50vmax;
+  position: fixed;
+  width: 100vmax;
+  height: 100vmax;
+  z-index: -3;
+}
+#objectLayer {
+  transform-style: preserve-3d;
+  transform-origin: 250px 250px 500px;
+  position: fixed;
+  width: 500px;
+  height: 500px;
+  z-index: -2;
+}
+.hud {
+  position: fixed;
+  font-family: "Press Start 2P", sans-serif;
+  color: #fff;
+  font-size: 15px;
+}
+.hud.window {
+  border: 1vh solid #fff;
+  min-width: 30vw;
+  padding: 2vh;
+  background: linear-gradient(#3838d8 0%, #000068 100%);
+  box-shadow: 2vh 2vh #000;
+}
+.hud:focus {
+  display: none;
+}
+.hud ul {
+  padding-left: 0;
+}
+.hud li {
+  list-style: none;
+}
+#instruction {
+  top: 20px;
+  left: 20px;
+}
+#stats {
+  bottom: 20px;
+  left: 20px;
+}
+#crosshairs {
+  top: calc(50vh - 25px);
+  left: calc(50vw - 25px);
+  width: 50px;
+  height: 50px;
+  border: 2px dashed #fff;
+  box-sizing: border-box;
+  border-radius: 50%;
+}
+/* 
+* CSS Objects
+*/
+.object {
+  display: block;
+  transform-style: preserve-3d;
+  position: absolute;
+  transform-origin: center center;
+  width: 125px;
+  height: 125px;
+  font-size: 0;
+}
+.skybox {
+  transform-origin: 50vmax 50vmax 50vmax;
+}
+.chest {
+  background: none;
+}
+.pyramid {
+  background: none;
+  transform: translateX(125px);
+}
+.box-bottom {
+  width: 125px;
+  height: 62.5px;
+  transform-origin: bottom right;
+  transform: translateY(62.5px);
+}
+.box-lid {
+  width: 125px;
+  height: 62.5px;
+  transform-origin: bottom right;
+  transition: transform 1s ease-out;
+}
+.side,
+.inner-side {
+  position: absolute;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.side {
+  border: 0px solid #000;
+  background: url("./test_grid.png");
+  background-size: 100%;
+}
+.skybox .side {
+  width: 100vmax;
+  height: 100vmax;
+  background-image: url("./skybox.jpg");
+  background-size: 400vmax;
+  background-repeat: repeat;
+}
+.pyramid .side {
+  width: 125px;
+  height: 125px;
+}
+.box-bottom .side {
+  width: 125px;
+  height: 62.5px;
+}
+.box-lid .side {
+  width: 125px;
+  height: 62.5px;
+}
+.box-bottom .top,
+.box-bottom .bottom,
+.box-lid .top,
+.box-lid .bottom {
+  height: 125px;
+}
+.pyramid .front,
+.pyramid .left,
+.pyramid .back,
+.pyramid .right {
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  background: #000;
+  border: 0;
+}
+.pyramid .inner-side {
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/3530567/test_grid.png");
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  position: absolute;
+}
+.skybox .back,
+.box .back {
+  transform: rotateY(180deg);
+}
+.skybox .back {
+  background-position: -300vmax -100vmax;
+}
+.pyramid .back {
+  transform: rotateY(180deg) rotateX(30deg);
+  transform-origin: bottom center;
+}
+.skybox .right,
+.box .right {
+  transform: rotateY(-270deg);
+  transform-origin: bottom right;
+}
+.skybox .right {
+  background-position: -200vmax -100vmax;
+}
+.pyramid .right {
+  transform: rotateY(-270deg) rotateX(30deg);
+  transform-origin: bottom right;
+}
+.skybox .left,
+.box .left {
+  transform: rotateY(270deg);
+  transform-origin: bottom left;
+}
+.skybox .left {
+  background-position: 0vmax -100vmax;
+}
+.pyramid .left {
+  transform: rotateY(270deg) rotateX(30deg);
+  transform-origin: bottom left;
+}
+.skybox .top,
+.box .top {
+  transform: rotateX(90deg);
+  transform-origin: top center;
+}
+.skybox .top {
+  background-position: -100vmax 0vmax;
+}
+.pyramid .bottom {
+  transform: rotateX(90deg) translateY(125px);
+  transform-origin: bottom center;
+}
+.skybox .bottom {
+  transform: rotateX(-90deg);
+  transform-origin: bottom center;
+  background-position: -100vmax -200vmax;
+}
+.box-bottom .bottom {
+  transform: rotateX(90deg) translateZ(62.5px) translateY(125px);
+  transform-origin: bottom center;
+}
+.box-lid .bottom {
+  transform: rotateX(90deg) translateZ(62.5px) translateY(125px);
+  transform-origin: bottom center;
+}
+.skybox .front {
+  transform: translateZ(100vmax);
+  transform-origin: center center;
+  background-position: -100vmax -100vmax;
+}
+.box .front {
+  transform: translateZ(125px);
+  transform-origin: center center;
+}
+.pyramid .front {
+  transform: translateZ(125px) rotateX(30deg);
+  transform-origin: bottom center;
+}
+.chest {
+  left: 50%;
+  bottom: 0;
+}
+.chest:hover .box-lid {
+  transform: rotateX(45deg);
+}
+.grid-plane {
+  width: 500px;
+  height: 500px;
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/3530567/test_grid.png");
+  background-size: 100%;
+}
+.grid-plane.bottom {
+  transform: rotateX(90deg) translateY(500px);
+  transform-origin: bottom center 0;
+}
+.grid-plane.left {
+  transform: rotateY(270deg);
+  transform-origin: bottom left;
+}
+.grid-plane.right {
+  transform: rotateY(-270deg);
+  transform-origin: bottom right;
+}
+@-moz-keyframes chest-open {
+  from {
+    transform: rotateX(0deg);
+  }
+  to {
+    transform: rotateX(45deg);
+  }
+}
+@-webkit-keyframes chest-open {
+  from {
+    transform: rotateX(0deg);
+  }
+  to {
+    transform: rotateX(45deg);
+  }
+}
+@-o-keyframes chest-open {
+  from {
+    transform: rotateX(0deg);
+  }
+  to {
+    transform: rotateX(45deg);
+  }
+}
+@keyframes chest-open {
+  from {
+    transform: rotateX(0deg);
+  }
+  to {
+    transform: rotateX(45deg);
+  }
+}

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link href="./style.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+
+  <body>
+    <div id="renderArea">
+      <div id="hudLayer">
+        <div class="hud" id="instruction">
+          <ul>
+            <li>
+              <span id="mouseprompt">>>click to lock mouse</span>
+            </li>
+            <li>
+              >>z to toggle skybox
+            </li>
+            <li>
+              >>wasd to move
+            </li>
+            <li>world transform origin:<span id="origin">default</span></li>
+            <li>
+              mouseX:<span id="mx">0.00</span> mouseY:<span id="my">0.00 </span>
+            </li>
+          </ul>
+        </div>
+        <div class="hud" id="stats">
+          <ul>
+            <li>
+              posX:<span id="px">0.00</span> posY:<span id="py">0.00</span>
+              posZ:<span id="pz">0.00</span>
+            </li>
+            <li>
+              rotX:<span id="rx">0.00</span> rotY:<span id="ry">0.00</span>
+              rotZ:<span id="rz">0.00</span>
+            </li>
+            <li>Object Count: <span id="objectCount">0</span></li>
+          </ul>
+        </div>
+        <div class="hud" id="crosshairs"></div>
+      </div>
+      <div id="ground"></div>
+      <div id="sky"></div>
+      <div id="skyboxLayer">
+        <div class="object skybox" id="skybox">
+          <div class="side back"></div>
+          <div class="side top"></div>
+          <div class="side bottom"></div>
+          <div class="side left"></div>
+          <div class="side right"></div>
+          <div class="side front"></div>
+        </div>
+      </div>
+      <div id="objectLayer">
+        <div class="object grid-plane back"></div>
+        <div class="object grid-plane bottom"></div>
+        <div class="object grid-plane left"></div>
+        <div class="object grid-plane right"></div>
+        <div class="object chest">
+          <div class="object box box-bottom">
+            <div class="side back">
+              back
+            </div>
+            <div class="side top">
+              top
+            </div>
+            <div class="side bottom">
+              bottom
+            </div>
+            <div class="side left">
+              left
+            </div>
+            <div class="side right">
+              right
+            </div>
+            <div class="side front">
+              front
+            </div>
+          </div>
+          <div class="object box box-lid">
+            <div class="side back">
+              back
+            </div>
+            <div class="side top">
+              top
+            </div>
+            <div class="side bottom">
+              bottom
+            </div>
+            <div class="side left">
+              left
+            </div>
+            <div class="side right">
+              right
+            </div>
+            <div class="side front">
+              front
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./css-fps.js"></script>
+  </body>
+</html>
